@@ -26,7 +26,13 @@ function App() {
       <h1>Salon Booking App</h1>
       <form onSubmit={handleSubmit}>
         <input placeholder="Name" onChange={(e) => setForm({ ...form, name: e.target.value })} /><br />
-        <input placeholder="Service" onChange={(e) => setForm({ ...form, service: e.target.value })} /><br />
+        <select value={form.service} onChange={(e) => setForm({ ...form, service: e.target.value })}>
+          <option value="">Select Service</option>
+          <option value="Haircut">Haircut</option>
+          <option value="Color">Color</option>
+          <option value="Styling">Styling</option>
+          <option value="Shave">Shave</option>
+        </select><br />
         <input type="date" onChange={(e) => setForm({ ...form, date: e.target.value })} /><br />
         <input type="time" onChange={(e) => setForm({ ...form, time: e.target.value })} /><br />
         <button type="submit">Book Appointment</button>
