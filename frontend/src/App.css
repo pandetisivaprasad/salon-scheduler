@@ -1,0 +1,86 @@
+body {
+  background: #f6f8fa;
+  font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+.salon-container {
+  max-width: 400px;
+  margin: 40px auto;
+  background: #fff;
+  border-radius: 16px;
+  box-shadow: 0 4px 24px rgba(0,0,0,0.08);
+  padding: 32px 24px 24px 24px;
+}
+
+.salon-title {
+  text-align: center;
+  color: #2d3a4b;
+  margin-bottom: 24px;
+}
+
+.salon-form label {
+  display: block;
+  margin-bottom: 6px;
+  color: #4a5568;
+  font-weight: 500;
+}
+
+.salon-form input,
+.salon-form select {
+  width: 100%;
+  padding: 10px 12px;
+  margin-bottom: 18px;
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+  font-size: 1rem;
+  background: #f9fafb;
+  transition: border 0.2s;
+}
+
+.salon-form input:focus,
+.salon-form select:focus {
+  border: 1.5px solid #3182ce;
+  outline: none;
+}
+
+.salon-form button {
+  width: 100%;
+  padding: 12px;
+  background: #3182ce;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.salon-form button:hover {
+  background: #2563eb;
+}
+
+.salon-appointments {
+  margin-top: 32px;
+}
+
+.salon-appointments h2 {
+  color: #2d3a4b;
+  margin-bottom: 12px;
+}
+
+.salon-appointments ul {
+  list-style: none;
+  padding: 0;
+}
+
+.salon-appointments li {
+  background: #f1f5f9;
+  margin-bottom: 10px;
+  padding: 10px 14px;
+  border-radius: 6px;
+  color: #374151;
+  font-size: 1rem;
+}

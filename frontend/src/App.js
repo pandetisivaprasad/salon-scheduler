@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import "./App.css";
 
 function App() {
   const [bookings, setBookings] = useState([]);
@@ -22,28 +23,38 @@ function App() {
   };
 
   return (
-    <div style={{ padding: "20px" }}>
-      <h1>Salon Booking App</h1>
-      <form onSubmit={handleSubmit}>
-        <input placeholder="Name" onChange={(e) => setForm({ ...form, name: e.target.value })} /><br />
-        <select value={form.service} onChange={(e) => setForm({ ...form, service: e.target.value })}>
+    <div className="salon-container">
+      <h1 className="salon-title">Salon Booking App</h1>
+      <form className="salon-form" onSubmit={handleSubmit}>
+        <label htmlFor="name">Name</label>
+        <input id="name" placeholder="Enter your name" onChange={(e) => setForm({ ...form, name: e.target.value })} />
+
+        <label htmlFor="service">Service</label>
+        <select id="service" value={form.service} onChange={(e) => setForm({ ...form, service: e.target.value })}>
           <option value="">Select Service</option>
           <option value="Haircut">Haircut</option>
           <option value="Color">Color</option>
           <option value="Styling">Styling</option>
           <option value="Shave">Shave</option>
-        </select><br />
-        <input type="date" onChange={(e) => setForm({ ...form, date: e.target.value })} /><br />
-        <input type="time" onChange={(e) => setForm({ ...form, time: e.target.value })} /><br />
+        </select>
+
+        <label htmlFor="date">Date</label>
+        <input id="date" type="date" onChange={(e) => setForm({ ...form, date: e.target.value })} />
+
+        <label htmlFor="time">Time</label>
+        <input id="time" type="time" onChange={(e) => setForm({ ...form, time: e.target.value })} />
+
         <button type="submit">Book Appointment</button>
       </form>
 
-      <h2>Appointments</h2>
-      <ul>
-        {bookings.map(b => (
-          <li key={b.id}>{b.name} - {b.service} - {b.date} at {b.time}</li>
-        ))}
-      </ul>
+      <div className="salon-appointments">
+        <h2>Appointments</h2>
+        <ul>
+          {bookings.map(b => (
+            <li key={b.id}>{b.name} - {b.service} - {b.date} at {b.time}</li>
+          ))}
+        </ul>
+      </div>
     </div>
   );
 }

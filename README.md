@@ -50,5 +50,18 @@ frontend/
 - Open the frontend in your browser.
 - Book appointments and view the list of all bookings.
 
+## Commands to Start & Stop Services 
+   ```sh
+   cd backend
+   node server.js
+   cd ../frontend
+   npm start
+   ```
+   ```sh
+   lsof -ti :4000 | xargs kill -9
+   lsof -ti :3000 | xargs kill -9
+   ```
+
+
 ## License
 MIT
