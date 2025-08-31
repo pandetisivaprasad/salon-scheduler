@@ -82,6 +82,8 @@ app.post("/bookings", authenticateToken, (req, res) => {
         [name, service, date, time],
         function (err) {
             if (err) return res.status(500).json({ error: err.message });
+            // Imitate sending an email by logging to the console
+            console.log(`(Imitation) Appointment confirmation email: Appointment booked for ${name} on ${date} at ${time} for service: ${service}`);
             res.json({ id: this.lastID, name, service, date, time });
         }
     );
