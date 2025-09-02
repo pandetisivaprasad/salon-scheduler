@@ -56,12 +56,16 @@ function App() {
   const handleCheckoutConfirm = () => {
     const paymentReceipt = generateRef("PAY");
     const appointmentRef = generateRef("APT");
+    const totalPrice = form.services.reduce((sum, s) => sum + (s.price || 0), 0);
     fetch("http://localhost:4000/bookings", {
       method: "POST",
       headers: { "Content-Type": "application/json", Authorization: `Bearer ${token}` },
       body: JSON.stringify({
         ...form,
-        service: form.services.map(s => s.label).join(", ")
+        service: form.services.map(s => s.label).join(", "),
+        price: totalPrice,
+        receipt_number: paymentReceipt,
+        reference_number: appointmentRef
       })
     })
       .then(res => res.json())

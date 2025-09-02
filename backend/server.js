@@ -13,8 +13,27 @@ app.use(bodyParser.json());
 // Initialize SQLite database
 const db = new sqlite3.Database("./salon.db");
 db.serialize(() => {
-    db.run("CREATE TABLE IF NOT EXISTS bookings (id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT, service TEXT, date TEXT, time TEXT)");
-    db.run("CREATE TABLE IF NOT EXISTS users (id INTEGER PRIMARY KEY AUTOINCREMENT, username TEXT UNIQUE, password TEXT)");
+        db.run(`CREATE TABLE IF NOT EXISTS bookings (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            name TEXT,
+            service TEXT,
+            date TEXT,
+            time TEXT,
+            price REAL,
+            receipt_number TEXT,
+            reference_number TEXT
+        )`);
+        db.run("CREATE TABLE IF NOT EXISTS users (id INTEGER PRIMARY KEY AUTOINCREMENT, username TEXT UNIQUE, password TEXT)");
+
+        // Migration: add new columns if missing
+        db.get("PRAGMA table_info(bookings)", (err, info) => {
+            db.all("PRAGMA table_info(bookings)", (err, columns) => {
+                const colNames = columns.map(c => c.name);
+                if (!colNames.includes("price")) db.run("ALTER TABLE bookings ADD COLUMN price REAL");
+                if (!colNames.includes("receipt_number")) db.run("ALTER TABLE bookings ADD COLUMN receipt_number TEXT");
+                if (!colNames.includes("reference_number")) db.run("ALTER TABLE bookings ADD COLUMN reference_number TEXT");
+            });
+        });
 });
 
 const JWT_SECRET = process.env.JWT_SECRET || "salon_secret_key_2025";
@@ -77,14 +96,15 @@ app.get("/bookings", authenticateToken, (req, res) => {
 
 
 app.post("/bookings", authenticateToken, (req, res) => {
-    const { name, service, date, time } = req.body;
-    db.run("INSERT INTO bookings (name, service, date, time) VALUES (?, ?, ?, ?)",
-        [name, service, date, time],
+    const { name, service, date, time, price, receipt_number, reference_number } = req.body;
+    db.run(
+        "INSERT INTO bookings (name, service, date, time, price, receipt_number, reference_number) VALUES (?, ?, ?, ?, ?, ?, ?)",
+        [name, service, date, time, price, receipt_number, reference_number],
         function (err) {
             if (err) return res.status(500).json({ error: err.message });
             // Imitate sending an email by logging to the console
             console.log(`(Imitation) Appointment confirmation email: Appointment booked for ${name} on ${date} at ${time} for service: ${service}`);
-            res.json({ id: this.lastID, name, service, date, time });
+            res.json({ id: this.lastID, name, service, date, time, price, receipt_number, reference_number });
         }
     );
 });
